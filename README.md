@@ -1,70 +1,132 @@
-# Getting Started with Create React App
+# React App with Netlify CMS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple React application with Netlify CMS integration for content management. Edit hero section text, images, feature section content, and more through an intuitive admin interface.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- 🎨 Modern, responsive design
+- ✏️ Edit hero section title, subtitle, image, and CTA button
+- 📝 Manage features section with title, description, and feature list
+- 🖼️ Upload and manage images
+- 🚀 Built with React and Netlify CMS
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js (v14 or later)
+- npm or yarn
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-### `npm run build`
+3. Start the development server:
+   ```bash
+   npm start
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Open [http://localhost:3000](http://localhost:3000) to view the app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Setting up Netlify CMS
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### For Local Development
 
-### `npm run eject`
+1. The app runs with default content locally
+2. To test the CMS interface locally, you can use Netlify CMS's test-repo backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### For Production (Netlify Deployment)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Deploy to Netlify:**
+   - Connect your GitHub repository to Netlify
+   - Deploy the site
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Enable Netlify Identity:**
+   - Go to your Netlify site dashboard
+   - Navigate to Settings > Identity
+   - Click "Enable Identity"
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Configure Git Gateway:**
+   - In Identity settings, scroll to "Services"
+   - Click "Enable Git Gateway"
 
-## Learn More
+4. **Access the CMS:**
+   - Visit `yourdomain.netlify.app/admin/`
+   - Sign up/log in with Netlify Identity
+   - Start editing your content!
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Content Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The CMS manages content in `content/home.md` with the following structure:
 
-### Code Splitting
+- **Hero Section:**
+  - Title
+  - Subtitle
+  - Hero Image
+  - CTA Button Text
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Features Section:**
+  - Section Title
+  - Section Description
+  - Feature List (each with title, description, and icon)
 
-### Analyzing the Bundle Size
+## File Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+src/
+├── components/
+│   ├── Hero.js          # Hero section component
+│   ├── Hero.css         # Hero section styles
+│   ├── Features.js      # Features section component
+│   └── Features.css     # Features section styles
+├── utils/
+│   └── contentLoader.js # Content parsing utilities
+├── App.js               # Main app component
+└── App.css              # Global styles
 
-### Making a Progressive Web App
+public/
+├── admin/
+│   ├── index.html       # CMS admin interface
+│   └── config.yml       # CMS configuration
+├── img/                 # Images directory
+└── index.html           # Main HTML file
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+content/
+└── home.md              # Content file managed by CMS
+```
 
-### Advanced Configuration
+## Customization
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Adding New Content Types
 
-### Deployment
+1. Update `public/admin/config.yml` to add new collections or fields
+2. Create corresponding React components
+3. Update the content loader utility if needed
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Styling
 
-### `npm run build` fails to minify
+- Modify component CSS files for styling changes
+- Update `src/App.css` for global styles
+- The design uses CSS Grid and Flexbox for responsive layouts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Technologies Used
+
+- **React** - Frontend framework
+- **Netlify CMS** - Content management
+- **Netlify Identity** - Authentication
+- **CSS3** - Styling with modern features
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+This project is open source and available under the MIT License.

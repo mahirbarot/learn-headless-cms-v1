@@ -1,23 +1,52 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Footer from './components/Footer';
+import { getDefaultContent } from './utils/contentLoader';
 
 function App() {
+  const [content, setContent] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // In a real app, you'd fetch this from your CMS
+    // For now, we'll use the default content
+    const loadContent = async () => {
+      try {
+        // Simulate loading from CMS
+        setTimeout(() => {
+          setContent(getDefaultContent());
+          setLoading(false);
+        }, 500);
+      } catch (error) {
+        console.error('Error loading content:', error);
+        setContent(getDefaultContent());
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading content...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <main className="main-content">
+        <Hero hero={content?.hero} />
+        <Features features={content?.features} />
+      </main>
+      <Footer />
     </div>
   );
 }
