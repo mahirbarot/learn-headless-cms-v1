@@ -1,6 +1,6 @@
 ---
 hero:
-  title: Welcome to Our UCI Blog Site
+  title: Welcome to Our UCI Blog web app
   subtitle: Discover the power of modern web development with our cutting-edge
     solutions. Build, deploy, and scale your applications with ease.
   image: /img/image.jpg
