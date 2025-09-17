@@ -4,22 +4,20 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import Footer from './components/Footer';
-import { getDefaultContent } from './utils/contentLoader';
+import { fetchContent, getDefaultContent } from './utils/contentLoader';
 
 function App() {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In a real app, you'd fetch this from your CMS
-    // For now, we'll use the default content
     const loadContent = async () => {
       try {
-        // Simulate loading from CMS
-        setTimeout(() => {
-          setContent(getDefaultContent());
-          setLoading(false);
-        }, 500);
+        setLoading(true);
+        // Fetch content from CMS
+        const cmsContent = await fetchContent();
+        setContent(cmsContent);
+        setLoading(false);
       } catch (error) {
         console.error('Error loading content:', error);
         setContent(getDefaultContent());

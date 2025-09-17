@@ -1,6 +1,8 @@
+import yaml from 'js-yaml';
+
 // Content loader utility for parsing markdown frontmatter
 export const parseMarkdownContent = (markdownContent) => {
-  // Simple frontmatter parser
+  // Extract frontmatter from markdown
   const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
   const match = markdownContent.match(frontmatterRegex);
   
@@ -8,83 +10,47 @@ export const parseMarkdownContent = (markdownContent) => {
   
   const frontmatter = match[1];
   
-  // Parse YAML-like content (simplified)
   try {
-    // For this demo, we'll use a simplified approach
-    // In production, you'd want to use a proper YAML parser
-    const content = parseSimpleYaml(frontmatter);
+    // Parse YAML frontmatter using js-yaml
+    const content = yaml.load(frontmatter);
     return content;
   } catch (error) {
-    console.error('Error parsing content:', error);
+    console.error('Error parsing YAML content:', error);
     return null;
   }
 };
 
-const parseSimpleYaml = (yamlString) => {
-  // This is a very basic YAML parser for our specific structure
-  // In production, use a proper YAML library like js-yaml
-  const lines = yamlString.split('\n');
-  const result = {};
-  let currentSection = null;
-  let currentList = null;
-  let currentItem = null;
-  
-  for (let line of lines) {
-    line = line.trim();
-    if (!line) continue;
+// Fetch content from the CMS-managed content
+export const fetchContent = async () => {
+  try {
+    // First try to fetch the pre-built JSON content
+    const jsonResponse = await fetch('/content/home.json');
     
-    if (line.endsWith(':') && !line.includes('"')) {
-      const key = line.slice(0, -1);
-      if (key === 'hero' || key === 'features') {
-        currentSection = key;
-        result[currentSection] = {};
-      } else if (key === 'feature_list') {
-        currentList = [];
-        result[currentSection][key] = currentList;
-      } else if (line.startsWith('  ') && currentSection) {
-        // Nested property
-        result[currentSection][key] = {};
-        currentItem = result[currentSection][key];
-      }
-    } else if (line.includes(':')) {
-      const [key, ...valueParts] = line.split(':');
-      let value = valueParts.join(':').trim();
-      
-      // Remove quotes if present
-      if ((value.startsWith('"') && value.endsWith('"')) || 
-          (value.startsWith("'") && value.endsWith("'"))) {
-        value = value.slice(1, -1);
-      }
-      
-      const cleanKey = key.trim();
-      
-      if (line.startsWith('    -')) {
-        // List item
-        if (!currentList) {
-          currentList = [];
-          if (currentSection) {
-            result[currentSection].feature_list = currentList;
-          }
-        }
-        const itemKey = cleanKey.replace('- ', '');
-        if (!currentItem) {
-          currentItem = {};
-          currentList.push(currentItem);
-        }
-        currentItem[itemKey] = value;
-      } else if (line.startsWith('  ') && currentSection) {
-        // Section property
-        result[currentSection][cleanKey] = value;
-      }
-    } else if (line.startsWith('    -') && currentList) {
-      // New list item
-      currentItem = {};
-      currentList.push(currentItem);
+    if (jsonResponse.ok) {
+      const content = await jsonResponse.json();
+      return content;
     }
+    
+    // Fallback: try to fetch and parse the markdown file
+    const mdResponse = await fetch('/content/home.md');
+    
+    if (mdResponse.ok) {
+      const markdownContent = await mdResponse.text();
+      const parsedContent = parseMarkdownContent(markdownContent);
+      
+      if (parsedContent) {
+        return parsedContent;
+      }
+    }
+    
+    console.warn('Content file not found, using default content');
+    return getDefaultContent();
+  } catch (error) {
+    console.error('Error fetching content:', error);
+    return getDefaultContent();
   }
-  
-  return result;
 };
+
 
 // Default content fallback
 export const getDefaultContent = () => ({

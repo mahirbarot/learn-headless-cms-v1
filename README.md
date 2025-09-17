@@ -44,6 +44,8 @@ A simple React application with Netlify CMS integration for content management. 
 1. **Deploy to Netlify:**
    - Connect your GitHub repository to Netlify
    - Deploy the site
+   - Build command: `npm run build` (automatically includes content processing)
+   - Publish directory: `build`
 
 2. **Enable Netlify Identity:**
    - Go to your Netlify site dashboard
@@ -58,6 +60,9 @@ A simple React application with Netlify CMS integration for content management. 
    - Visit `yourdomain.netlify.app/admin/`
    - Sign up/log in with Netlify Identity
    - Start editing your content!
+   - Changes will automatically trigger new deployments
+
+**Important:** After making changes in the CMS, it may take 1-2 minutes for the changes to appear on your live site as Netlify rebuilds and deploys the updated content.
 
 ## Content Structure
 
