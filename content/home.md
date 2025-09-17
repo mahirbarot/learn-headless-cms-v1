@@ -1,6 +1,6 @@
 ---
 hero:
-  title: Welcome to Our Amazing Platform
+  title: Welcome to Our UCI Blog Site
   subtitle: Discover the power of modern web development with our cutting-edge
     solutions. Build, deploy, and scale your applications with ease.
   image: /img/image.jpg
